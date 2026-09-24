@@ -1,0 +1,17 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# IDE
+.idea/
+.vscode/
+
+# Logs and local data
+*.log
+*.xlsx
+*.csv
+.DS_Store
