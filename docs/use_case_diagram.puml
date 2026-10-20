@@ -1,0 +1,124 @@
+@startuml role_0
+left to right direction
+skinparam defaultFontName Arial
+skinparam defaultFontSize 15
+skinparam dpi 140
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam linetype polyline
+skinparam nodesep 24
+skinparam ranksep 70
+skinparam ArrowColor #475569
+skinparam ActorBorderColor #334155
+skinparam UsecaseBackgroundColor #F1F5F9
+skinparam UsecaseBorderColor #64748B
+actor "Коммерческий директор" as A0
+rectangle "Business Metrics Analyzer" {
+  usecase "UC-01\nПросмотр дашборда KPI" as U0_01
+  usecase "UC-02\nФормирование отчёта" as U0_02
+  usecase "UC-04\nЭкспорт отчёта в Excel" as U0_04
+}
+A0 -- U0_01
+A0 -- U0_02
+A0 -- U0_04
+@enduml
+
+@startuml role_1
+left to right direction
+skinparam defaultFontName Arial
+skinparam defaultFontSize 15
+skinparam dpi 140
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam linetype polyline
+skinparam nodesep 24
+skinparam ranksep 70
+skinparam ArrowColor #475569
+skinparam ActorBorderColor #334155
+skinparam UsecaseBackgroundColor #F1F5F9
+skinparam UsecaseBorderColor #64748B
+actor "Руководитель отдела" as A1
+rectangle "Business Metrics Analyzer" {
+  usecase "UC-01\nПросмотр дашборда KPI" as U1_01
+  usecase "UC-02\nФормирование отчёта" as U1_02
+  usecase "UC-04\nЭкспорт отчёта в Excel" as U1_04
+  usecase "UC-07\nУведомления о снижении KPI" as U1_07
+}
+A1 -- U1_01
+A1 -- U1_02
+A1 -- U1_04
+A1 -- U1_07
+@enduml
+
+@startuml role_2
+left to right direction
+skinparam defaultFontName Arial
+skinparam defaultFontSize 15
+skinparam dpi 140
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam linetype polyline
+skinparam nodesep 24
+skinparam ranksep 70
+skinparam ArrowColor #475569
+skinparam ActorBorderColor #334155
+skinparam UsecaseBackgroundColor #F1F5F9
+skinparam UsecaseBorderColor #64748B
+actor "Менеджер по продажам" as A2
+rectangle "Business Metrics Analyzer" {
+  usecase "UC-01\nПросмотр дашборда KPI" as U2_01
+  usecase "UC-03\nЗагрузка данных о продажах" as U2_03
+}
+A2 -- U2_01
+A2 -- U2_03
+@enduml
+
+@startuml role_3
+left to right direction
+skinparam defaultFontName Arial
+skinparam defaultFontSize 15
+skinparam dpi 140
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam linetype polyline
+skinparam nodesep 24
+skinparam ranksep 70
+skinparam ArrowColor #475569
+skinparam ActorBorderColor #334155
+skinparam UsecaseBackgroundColor #F1F5F9
+skinparam UsecaseBorderColor #64748B
+actor "Аналитик" as A3
+rectangle "Business Metrics Analyzer" {
+  usecase "UC-01\nПросмотр дашборда KPI" as U3_01
+  usecase "UC-02\nФормирование отчёта" as U3_02
+  usecase "UC-03\nЗагрузка данных о продажах" as U3_03
+  usecase "UC-04\nЭкспорт отчёта в Excel" as U3_04
+  usecase "UC-06\nНастройка правил расчёта метрик" as U3_06
+}
+A3 -- U3_01
+A3 -- U3_02
+A3 -- U3_03
+A3 -- U3_04
+A3 -- U3_06
+@enduml
+
+@startuml role_4
+left to right direction
+skinparam defaultFontName Arial
+skinparam defaultFontSize 15
+skinparam dpi 140
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam linetype polyline
+skinparam nodesep 24
+skinparam ranksep 70
+skinparam ArrowColor #475569
+skinparam ActorBorderColor #334155
+skinparam UsecaseBackgroundColor #F1F5F9
+skinparam UsecaseBorderColor #64748B
+actor "Администратор системы" as A4
+rectangle "Business Metrics Analyzer" {
+  usecase "UC-05\nУправление пользователями" as U4_05
+}
+A4 -- U4_05
+@enduml
