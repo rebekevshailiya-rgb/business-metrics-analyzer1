@@ -1,0 +1,47 @@
+@startuml
+skinparam defaultFontName Arial
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 45
+skinparam ranksep 65
+skinparam dpi 150
+top to bottom direction
+node "Устройство пользователя" {
+ artifact "Браузер / Web UI" as browser
+}
+node "Облачная Linux VM / Docker Compose" {
+ node "edge network" {
+ node "Nginx" as nginx
+}
+ node "private application network" {
+  node "API container\nbma-app: pinned tag/digest" as api {
+ artifact "FastAPI / Uvicorn"
+}
+  node "Worker container\nтот же bma-app" as worker {
+ artifact "Celery + dispatcher"
+}
+  database "PostgreSQL\npersistent volume" as db
+  queue "Redis broker\npersistent volume" as broker
+  database "Redis cache\nTTL / eviction" as cache
+ }
+}
+cloud "Закрытое объектное хранилище\nS3 / учебный MinIO" as storage
+cloud "SMTP-провайдер" as smtp
+cloud "HTTPS API источника продаж" as source
+browser --> nginx : HTTPS 443
+nginx --> api : HTTP 8000
+api --> db : SQL 5432
+api --> cache : Redis 6379
+api --> storage : S3 API / HTTPS
+worker --> broker : Redis 6379
+worker --> db : SQL 5432
+worker --> storage : S3 API / HTTPS
+worker --> smtp : SMTP TLS
+worker --> source : HTTPS
+legend bottom
+ Один узел: отказоустойчивость не заявлена.
+ Публичен только Nginx; БД и Redis доступны во внутренней сети.
+ Broker и cache — разные экземпляры Redis.
+endlegend
+@enduml

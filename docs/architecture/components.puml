@@ -1,0 +1,40 @@
+@startuml
+skinparam defaultFontName Arial
+skinparam defaultFontSize 18
+skinparam shadowing false
+skinparam nodesep 55
+skinparam ranksep 85
+skinparam dpi 150
+top to bottom direction
+package "Presentation" {
+ component "auth / users / sales / kpi / reports\nFastAPI controllers" as api
+}
+package "Application" {
+ component "AuthService / UserService\nSalesImportService\nKpiService / ReportService" as services
+ interface "IUserRepository / ITokenProvider" as auth
+ interface "ISaleRepository / IUoW / IJobQueue" as data
+ interface "IKpiCache / IReportGenerator\nIObjectStorage / INotifier / ISalesSource" as ext
+}
+package "Domain" {
+ component "Sale / User / Report / KpiResult\nKpiStrategy / Validators / Role / Scope" as domain
+}
+package "Infrastructure" {
+ component "SqlUserRepository / JwtProvider\nSqlSaleRepository / SqlUnitOfWork\nJobQueue / OutboxDispatcher\nRedisCache / ReportGeneratorFactory\nExcel/PdfReportGenerator\nObjectStorage / SmtpNotifier / SourceAdapter" as adapters
+}
+database "PostgreSQL" as db
+cloud "Redis / S3 / SMTP / source API" as external
+api -down-> services
+services -down-> domain
+services --> auth
+services --> data
+services --> ext
+adapters ..|> auth
+adapters ..|> data
+adapters ..|> ext
+adapters --> db
+adapters --> external
+legend bottom
+Сплошная стрелка: использование. Пунктир с треугольником: реализация порта.
+Domain не зависит от инфраструктуры. Связывание выполняет composition root.
+endlegend
+@enduml

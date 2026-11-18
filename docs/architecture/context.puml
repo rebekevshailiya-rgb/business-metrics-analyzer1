@@ -1,0 +1,27 @@
+@startuml
+skinparam defaultFontName Arial
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 45
+skinparam ranksep 65
+skinparam dpi 150
+!include <C4/C4_Context>
+LAYOUT_TOP_DOWN()
+Person(director, "Директор", "KPI всех отделов")
+Person(manager, "Менеджер", "Свои сделки")
+Person(analyst, "Аналитик", "Анализ и метрики")
+Person(admin, "Администратор", "Учётные записи")
+Person(head, "Руководитель отдела", "Свой отдел")
+System(bma, "Business Metrics Analyzer", "Импорт, KPI, отчёты; проектируемая веб-система")
+System_Ext(source, "Учётная система продаж", "1С / выгрузки CSV, XLSX / будущий HTTPS API")
+System_Ext(mail, "Почтовый провайдер", "Отправка email")
+Rel(director,bma,"Просмотр и экспорт")
+Rel(manager,bma,"Загрузка и просмотр")
+Rel(analyst,bma,"Отчёты и настройки")
+Rel(admin,bma,"Управление доступом")
+Rel(head,bma,"Отчёты отдела")
+Rel(source,bma,"Данные продаж: через пользователя или API")
+Rel(bma,mail,"Уведомления")
+SHOW_LEGEND()
+@enduml

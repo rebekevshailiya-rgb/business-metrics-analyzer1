@@ -1,0 +1,34 @@
+@startuml
+skinparam defaultFontName Arial
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam linetype polyline
+skinparam nodesep 45
+skinparam ranksep 95
+skinparam dpi 150
+!include <C4/C4_Container>
+LAYOUT_TOP_DOWN()
+Person(user,"Пользователь","Директор / руководитель / менеджер / аналитик / администратор")
+System_Boundary(bma,"Business Metrics Analyzer — модульный монолит") {
+ Container(web,"Web UI","HTML / JavaScript","Просмотр KPI, загрузка файлов")
+ Container(api,"REST API","FastAPI / Uvicorn","AuthService, UserService, KpiService; постановка импорта и отчётов")
+ Container(worker,"Фоновый worker","Тот же Python-код / Celery","SalesImportService, KpiService, ReportService; outbox dispatcher")
+ ContainerDb(db,"Данные","PostgreSQL","Продажи, staging, агрегаты, задания, роли, аудит, outbox")
+ ContainerDb(queue,"Очередь","Redis broker","Повторяемые фоновые задания; не кэш")
+ ContainerDb(cache,"Кэш KPI","Redis cache","Scope + period + dataset_version + rule_version")
+ ContainerDb(store,"Файлы","S3 / MinIO","Закрытые исходные файлы и отчёты")
+}
+System_Ext(source,"Источник продаж","Внешний HTTPS API / файловая выгрузка")
+System_Ext(mail,"Почтовый сервис","SMTP TLS")
+Rel(user,web,"Работает","HTTPS")
+Rel(web,api,"Запросы с JWT","REST / JSON, HTTPS")
+Rel(api,db,"Права и агрегаты","SQL")
+Rel(api,cache,"KPI","Redis")
+Rel(api,store,"Файлы","S3 API")
+Rel(worker,queue,"Задания","Redis")
+Rel(worker,db,"Импорт","SQL")
+Rel(worker,store,"Файлы","S3 API")
+Rel(worker,source,"Данные","HTTPS")
+Rel(worker,mail,"Email","SMTP TLS")
+SHOW_LEGEND()
+@enduml
